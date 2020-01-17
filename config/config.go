@@ -2,12 +2,12 @@ package config
 
 import (
 	"time"
-
-	"github.com/spf13/viper"
-	"github.com/spf13/pflag"
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/spf13/viper"
+	"github.com/spf13/pflag"
 )
 
 type containerformat int
@@ -18,7 +18,7 @@ const (
 	UnknownFmt
 )
 
-func ValidFormat(s string) (containerformat,bool){
+func validFormat(s string) (containerformat,bool){
 	switch s {
 	case "hls":
 		return HlsFmt,true
@@ -49,6 +49,9 @@ type Config struct {
 	Froms []string
 	Outformat containerformat
 	Save *SaveConfig
+	Addr string
+	Certf string
+	Keyf string
 }
 
 func init() {
@@ -58,12 +61,15 @@ func init() {
 	pflag.String("save.max","","save mp4 file max time")
 	pflag.String("save.dir","","save mp4 file dir")
 	pflag.String("addr",":1993","listen addr")
+	pflag.String("cert","","cert file path")
+	pflag.String("key","","key file path")
 	pflag.String("conf","","config file,support json,yaml,toml")
 }
 
 func parse() {
 	pflag.Parse()
 	viper.BindPFlags(pflag.CommandLine)
+	printVersion()
 }
 
 func mustFromViper(c *Config) {
@@ -71,7 +77,7 @@ func mustFromViper(c *Config) {
 		panic("config is nil")
 	}
 	c.Froms=viper.GetStringSlice("froms")
-	outf,ok:=ValidFormat(viper.GetString("outformat"))
+	outf,ok:=validFormat(viper.GetString("outformat"))
 	if !ok{
 		panic(fmt.Sprintf("outformat not support: %s, only hls,flv",viper.GetString("outformat")))
 	}
@@ -93,6 +99,7 @@ func mustFromViper(c *Config) {
 	}
 
 	c.Save.Dir=viper.GetString("save.dir")
+	c.Addr = viper.GetString("addr")
 }
 
 func mustConfigFromFile(fpath string) Config{
