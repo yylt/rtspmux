@@ -42,6 +42,7 @@ GO_LDFLAGS=-ldflags '-s -w -X $(PKG)/config.Version=$(COMMIT) -X $(PKG)/config.R
 
 PACKAGE=github.com/yylt/rtspmux
 NAME=rtspmux
+BINDIR=bin
 .PHONY: all binary
 all: binary
 
@@ -50,4 +51,4 @@ binary:
 	@echo "bin: ${PACKAGE} "
 	@echo "git commit: ${COMMIT}; goversion: ${GOVER}"
 	@echo "git branch: ${GIT_BRANCH}; git dirty: ${GIT_DIRTY}"
-	go build -o ${NAME} ${GO_GCFLAGS} ${GO_BUILD_FLAGS} $(GO_LDFLAGS) ${PACKAGE}
+	go build -o ${BINDIR}/${NAME}-${GOOS}-${GOARCH} ${GO_GCFLAGS} ${GO_BUILD_FLAGS} $(GO_LDFLAGS) ${PACKAGE}
