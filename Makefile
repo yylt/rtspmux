@@ -50,4 +50,4 @@ binary:
 	@echo "bin: ${PACKAGE} "
 	@echo "git commit: ${COMMIT}; goversion: ${GOVER}"
 	@echo "git branch: ${GIT_BRANCH}; git dirty: ${GIT_DIRTY}"
-	go build -o ${NAME} ${GO_GCFLAGS} ${GO_BUILD_FLAGS} $(GO_LDFLAGS) ${PACKAGE}-${GOOS}-${GOARCH}
+	go build -o ${NAME} ${GO_GCFLAGS} ${GO_BUILD_FLAGS} $(GO_LDFLAGS) ${PACKAGE}
