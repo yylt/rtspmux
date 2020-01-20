@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+
 	"github.com/yylt/rtspmux/config"
 	"github.com/yylt/rtspmux/stream"
 	"github.com/gorilla/mux"
@@ -58,11 +59,14 @@ func (s *Server) probe() error{
 	default:
 		return fmt.Errorf("%v not support",s.conf.Outformat)
 	}
-	s.save,err = stream.NewSaveMp4(&stream.Saveconf{
-		Dir:s.conf.Save.Dir,
-		Maxtime:s.conf.Save.Max,
-		Fragtime:s.conf.Save.Interval,
-	})
+	if s.conf.Save.Enable{
+		s.save,err = stream.NewSaveMp4(&stream.Saveconf{
+			Dir:s.conf.Save.Dir,
+			Maxtime:s.conf.Save.Max,
+			Fragtime:s.conf.Save.Interval,
+		})
+	}
+
 	if err!= nil{
 		return err
 	}
@@ -79,6 +83,9 @@ func (s *Server) Stop() {
 }
 
 func (s *Server) starSave() {
+	if !s.conf.Save.Enable{
+		return
+	}
 	for _,stm :=range s.streams{
 		s.save.Start(stm.Clone())
 	}

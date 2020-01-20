@@ -42,6 +42,7 @@ type SaveConfig struct {
 	Interval time.Duration //每个文件的记录时长
 	Max time.Duration
 	Dir string
+	Enable bool
 }
 
 
@@ -60,6 +61,7 @@ func init() {
 	pflag.String("save.interval","","save mp4 file interval")
 	pflag.String("save.max","","save mp4 file max time")
 	pflag.String("save.dir","","save mp4 file dir")
+	pflag.Bool("save.enable",false,"open save config")
 	pflag.String("addr",":1993","listen addr")
 	pflag.String("cert","","cert file path")
 	pflag.String("key","","key file path")
@@ -99,6 +101,7 @@ func mustFromViper(c *Config) {
 	}
 
 	c.Save.Dir=viper.GetString("save.dir")
+	c.Save.Enable=viper.GetBool("save.enable")
 	c.Addr = viper.GetString("addr")
 }
 
