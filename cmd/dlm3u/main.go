@@ -96,11 +96,11 @@ func downloadWorker(ctx context.Context, m3u8url string, interval time.Duration,
 
 func main() {
 	u8url := flag.String("m3u8", "", "m3u8 url address, mostly http://xxx or https://xxx ")
-	workernum := flag.Int("workers", 3, "download worker number")
-	fetchInterval := flag.Duration("feetch-interval", time.Second*3, "fetch m3u8 interval")
+	workernum := flag.Int("workers", 5, "download worker number")
+	fetchInterval := flag.Duration("feetch-interval", time.Second*2, "fetch m3u8 interval")
 	mergeInterval := flag.Duration("merge-interval", time.Millisecond*300, "merge item interval, which is check directory duration")
 	maxMbsize := flag.Int64("mb-max-size", 300, "the max Mb size in one merged file")
-	dir := flag.String("dir", "/opt/mergem3u", "which directory saved all files")
+	dir := flag.String("dir", "/opt/dlm3u", "which directory saved all files")
 
 	klog.InitFlags(flag.CommandLine)
 	flag.Parse()
