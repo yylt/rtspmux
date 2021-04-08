@@ -1,11 +1,10 @@
 package main
 
 import (
+	"github.com/yylt/rtspmux/config"
 	"log"
 	"os"
 	"os/signal"
-	"github.com/yylt/rtspmux/config"
-
 )
 
 

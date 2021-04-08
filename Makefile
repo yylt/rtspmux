@@ -40,9 +40,10 @@ GO_GCFLAGS=$(shell				\
 GO_LDFLAGS=-ldflags '-s -w -X $(PKG)/config.Version=$(COMMIT) -X $(PKG)/config.Revision=$(GOVER) -X $(PKG)/config.Dirty=$(GIT_DIRTY) -X $(PKG)/config.Branch=$(GIT_BRANCH)'
 #GO_BUILD_FLAGS = $(shell echo -a -installsuffix cgo)
 
-PACKAGE=github.com/yylt/rtspmux
-NAME=rtspmux
+PACKAGE=github.com/yylt/rtspmux/cmd/dlm3u
+NAME=dlm3u
 BINDIR=bin
+
 .PHONY: all binary
 all: binary
 
